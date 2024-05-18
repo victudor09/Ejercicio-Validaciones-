@@ -17,6 +17,12 @@ const success_msg = document.getElementById('success_msg')
 
 const sendButton = document.getElementById('sendButton')
 
+let miarray = []
+let miarrayjson = JSON.stringify(miarray)
+// compruebo que existe el usuario
+if (!localStorage.users) {
+    localStorage.setItem('users', miarrayjson);
+}
 
 function onSubmit(event) {
     event.preventDefault()
@@ -48,6 +54,7 @@ function onSubmit(event) {
         }
 
     //Llama a la funcion que define y guarda valores de usuarios
+
     saveDataStorage()
 
     //Llama a la funcion redireccionar en caso de que no hay ningun fallo
@@ -57,14 +64,18 @@ function onSubmit(event) {
 //Defino la función que guarda datos de usurios
 
 function saveDataStorage(){  
+    let usersArray = JSON.parse(localStorage.users)
     //Guarda la info recogida en localStorage (EN APARTADO DE APPLICATION)
-    const userData = {
+    let userData = {
         userName: inputName.value,
         userEmail: inputEmail.value,
         userPass: inputPassword.value,
         userPassC: inputConfirm_pwrd.value
     }
-    localStorage.setItem('userData', JSON.stringify(userData))
+    // const users = {userDataInfo: userData}
+    
+    usersArray.push(userData)
+    localStorage.setItem('users', JSON.stringify(usersArray))
 }
 
 //Define la función redireccionar
